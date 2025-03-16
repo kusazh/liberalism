@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liberalism</title>
+  <style>
+    body { font-family: monospace; white-space: nowrap; }
+    h1, .panel { margin: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Liberalism</h1>
+
+  <script>
+    window.onload = createPanel(document.body);
+
+    function createPanel(container) {
+      const parent = container.parentNode;
+      const parentBtn = parent.querySelector('button');
+      const panel = document.createElement('div');
+      panel.className = 'panel';
+
+      const btn = document.createElement('button');
+      if (parentBtn?.textContent) {
+        btn.textContent = `${parentBtn?.textContent}’s Setting`;
+      } else {
+        btn.textContent = `Setting`;
+      }
+
+      if (parentBtn) {
+        const toggleLabel = document.createElement('label');
+        const toggleInput = document.createElement('input');
+        toggleInput.type = 'checkbox';
+        toggleInput.checked = true;
+        toggleLabel.appendChild(toggleInput);
+        toggleLabel.appendChild(document.createTextNode(`Show ${parentBtn.textContent} Button`));
+        
+        toggleInput.addEventListener('change', () => {
+          parentBtn.style.display = toggleInput.checked ? 'inline-block' : 'none';
+        });
+        panel.appendChild(toggleLabel);
+      }
+
+      const subContainer = document.createElement('div');
+      panel.appendChild(btn);
+      panel.appendChild(subContainer);
+      container.appendChild(panel);
+
+      btn.addEventListener('click', () => {
+        if (subContainer.querySelector('div')) {
+          subContainer.style.display = subContainer.style.display === 'none' ? 'block' : 'none';
+        } else {
+          createPanel(subContainer);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
